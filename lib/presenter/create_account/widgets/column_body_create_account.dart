@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:sign_in_warren/infra/providers/user_provider.dart';
 
 import '../../../infra/models/user_model.dart';
+import '../../../infra/providers/user_provider.dart';
 import '../../../infra/repositories/user_repository.dart';
 import '../../../shared/widgets/button_sign.dart';
 import '../../../shared/widgets/row_icons_button.dart';

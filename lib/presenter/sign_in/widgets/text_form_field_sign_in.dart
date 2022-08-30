@@ -3,16 +3,19 @@ import 'package:flutter/material.dart';
 class TextFormFieldSignIn extends StatelessWidget {
   final String title;
   final IconData icon;
+  final TextEditingController controller;
 
   const TextFormFieldSignIn({
     Key? key,
     required this.title,
     required this.icon,
+    required this.controller,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      controller: controller,
       decoration: InputDecoration(
         prefixIcon: Icon(
           icon,

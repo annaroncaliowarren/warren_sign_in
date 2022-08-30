@@ -11,5 +11,7 @@ class UserRepository {
       'http://192.168.0.43/api/Usuario',
       data: model.toMap(),
     );
+
+    await dio.get('http://192.168.0.43/api/Usuario');
   }
 }

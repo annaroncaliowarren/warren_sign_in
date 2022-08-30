@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:sign_in_warren/infra/providers/user_provider.dart';
 
 import '../../../shared/widgets/button_sign.dart';
 import '../../../shared/widgets/row_icons_button.dart';
@@ -6,11 +8,14 @@ import '../../../shared/widgets/text_button_sign.dart';
 import '../../create_account/create_account_page.dart';
 import 'text_form_field_sign_in.dart';
 
-class ColumnBodySignIn extends StatelessWidget {
+class ColumnBodySignIn extends HookConsumerWidget {
   const ColumnBodySignIn({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final emailController = ref.watch(emailControllerProvider.state);
+    final passwordController = ref.watch(passwordControllerProvider.state);
+
     return Column(
       children: [
         const Text(
@@ -31,12 +36,14 @@ class ColumnBodySignIn extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 18),
-        const TextFormFieldSignIn(
+        TextFormFieldSignIn(
+          controller: emailController.state,
           title: 'Email',
           icon: Icons.email_outlined,
         ),
         const SizedBox(height: 18),
-        const TextFormFieldSignIn(
+        TextFormFieldSignIn(
+          controller: passwordController.state,
           title: 'Password',
           icon: Icons.lock_outline_sharp,
         ),
