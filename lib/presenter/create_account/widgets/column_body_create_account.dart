@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:sign_in_warren/infra/providers/user_provider.dart';
 
 import '../../../infra/models/user_model.dart';
 import '../../../infra/repositories/user_repository.dart';
@@ -9,16 +11,23 @@ import '../../confirmation_registration/confirmation_registration_page.dart';
 import '../../sign_in/sign_in_page.dart';
 import 'text_form_field_create.dart';
 
-class ColumnBodyCreateAccount extends StatelessWidget {
-  ColumnBodyCreateAccount({Key? key}) : super(key: key);
-
-  final nameController = TextEditingController();
-  final emailController = TextEditingController();
-  final passwordController = TextEditingController();
-  final confirmPasswordController = TextEditingController();
+class ColumnBodyCreateAccount extends HookConsumerWidget {
+  const ColumnBodyCreateAccount({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final nameController = ref.watch(nameControllerProvider.state);
+    final emailController = ref.watch(emailControllerProvider.state);
+    final passwordController = ref.watch(passwordControllerProvider.state);
+    final confirmPasswordController = ref.watch(confirmPasswordControllerProvider.state);
+
+    void clearController() {
+      nameController.state.clear();
+      emailController.state.clear();
+      passwordController.state.clear();
+      confirmPasswordController.state.clear();
+    }
+
     return Column(
       children: [
         const Text(
@@ -42,41 +51,43 @@ class ColumnBodyCreateAccount extends StatelessWidget {
         TextFormFieldCreate(
           title: 'Name',
           icon: Icons.person_outline,
-          controller: nameController,
+          controller: nameController.state,
         ),
         const SizedBox(height: 16),
         TextFormFieldCreate(
           title: 'Email',
           icon: Icons.email_outlined,
-          controller: emailController,
+          controller: emailController.state,
         ),
         const SizedBox(height: 16),
         TextFormFieldCreate(
           title: 'Password',
           icon: Icons.lock_outline_sharp,
-          controller: passwordController,
+          controller: passwordController.state,
         ),
         const SizedBox(height: 16),
         TextFormFieldCreate(
           title: 'Confirm Password',
           icon: Icons.lock_outline_sharp,
-          controller: confirmPasswordController,
+          controller: confirmPasswordController.state,
         ),
         SizedBox(height: MediaQuery.of(context).size.height * 0.03),
         ButtonSign(
           title: 'SIGN UP',
           sizeFont: 15,
           isPressed: () {
-            if (passwordController.text == confirmPasswordController.text) {
+            if (passwordController.state.text == confirmPasswordController.state.text) {
               UserModel user = UserModel(
-                email: emailController.text,
-                senha: passwordController.text,
-                nome: nameController.text,
+                email: emailController.state.text,
+                senha: passwordController.state.text,
+                nome: nameController.state.text,
               );
 
               UserRepository.post(user);
+
+              clearController();
             } else {
-              return; 
+              return;
             }
 
             Navigator.of(context).push(
