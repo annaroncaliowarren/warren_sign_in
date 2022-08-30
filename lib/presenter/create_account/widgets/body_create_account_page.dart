@@ -7,8 +7,8 @@ class BodyCreateAccountPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Padding(
-      padding: EdgeInsets.symmetric(
+    return Padding(
+      padding: const EdgeInsets.symmetric(
         horizontal: 47,
         vertical: 35,
       ),

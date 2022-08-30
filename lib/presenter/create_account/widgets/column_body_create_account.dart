@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../../infra/models/user_model.dart';
+import '../../../infra/repositories/user_repository.dart';
 import '../../../shared/widgets/button_sign.dart';
 import '../../../shared/widgets/row_icons_button.dart';
 import '../../../shared/widgets/text_button_sign.dart';
@@ -8,7 +10,12 @@ import '../../sign_in/sign_in_page.dart';
 import 'text_form_field_create.dart';
 
 class ColumnBodyCreateAccount extends StatelessWidget {
-  const ColumnBodyCreateAccount({Key? key}) : super(key: key);
+  ColumnBodyCreateAccount({Key? key}) : super(key: key);
+
+  final nameController = TextEditingController();
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
+  final confirmPasswordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -32,30 +39,46 @@ class ColumnBodyCreateAccount extends StatelessWidget {
           ),
         ),
         SizedBox(height: MediaQuery.of(context).size.height * 0.02),
-        const TextFormFieldCreate(
+        TextFormFieldCreate(
           title: 'Name',
           icon: Icons.person_outline,
+          controller: nameController,
         ),
         const SizedBox(height: 16),
-        const TextFormFieldCreate(
+        TextFormFieldCreate(
           title: 'Email',
           icon: Icons.email_outlined,
+          controller: emailController,
         ),
         const SizedBox(height: 16),
-        const TextFormFieldCreate(
+        TextFormFieldCreate(
           title: 'Password',
           icon: Icons.lock_outline_sharp,
+          controller: passwordController,
         ),
         const SizedBox(height: 16),
-        const TextFormFieldCreate(
+        TextFormFieldCreate(
           title: 'Confirm Password',
           icon: Icons.lock_outline_sharp,
+          controller: confirmPasswordController,
         ),
         SizedBox(height: MediaQuery.of(context).size.height * 0.03),
         ButtonSign(
           title: 'SIGN UP',
           sizeFont: 15,
           isPressed: () {
+            if (passwordController.text == confirmPasswordController.text) {
+              UserModel user = UserModel(
+                email: emailController.text,
+                senha: passwordController.text,
+                nome: nameController.text,
+              );
+
+              UserRepository.post(user);
+            } else {
+              return; 
+            }
+
             Navigator.of(context).push(
               MaterialPageRoute(
                 builder: (context) => const ConfirmationRegistrationPage(),
