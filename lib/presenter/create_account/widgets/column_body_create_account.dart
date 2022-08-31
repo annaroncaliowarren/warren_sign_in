@@ -28,6 +28,34 @@ class ColumnBodyCreateAccount extends HookConsumerWidget {
       confirmPasswordController.state.clear();
     }
 
+    void signUp() {
+      if (nameController.state.text == "") {
+        return;
+      } else if (emailController.state.text == "") {
+        return;
+      } else if (passwordController.state.text == "") {
+        return;
+      } else if (passwordController.state.text == confirmPasswordController.state.text) {
+        UserModel user = UserModel(
+          email: emailController.state.text,
+          senha: passwordController.state.text,
+          nome: nameController.state.text,
+        );
+
+        UserRepository.post(user);
+
+        clearController();
+
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context) => const ConfirmationRegistrationPage(),
+          ),
+        );
+      } else {
+        return;
+      }
+    }
+
     return Column(
       children: [
         const Text(
@@ -76,25 +104,7 @@ class ColumnBodyCreateAccount extends HookConsumerWidget {
           title: 'SIGN UP',
           sizeFont: 15,
           isPressed: () {
-            if (passwordController.state.text == confirmPasswordController.state.text) {
-              UserModel user = UserModel(
-                email: emailController.state.text,
-                senha: passwordController.state.text,
-                nome: nameController.state.text,
-              );
-
-              UserRepository.post(user);
-
-              clearController();
-            } else {
-              return;
-            }
-
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (context) => const ConfirmationRegistrationPage(),
-              ),
-            );
+            signUp();
           },
         ),
         const Padding(

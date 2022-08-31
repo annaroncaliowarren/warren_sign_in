@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
+import '../../../infra/providers/user_provider.dart';
 import '../../../shared/widgets/button_sign.dart';
 import '../../sign_in/sign_in_page.dart';
 
-class ColumnBodyConfirmationRegistration extends StatelessWidget {
+class ColumnBodyConfirmationRegistration extends HookConsumerWidget {
   const ColumnBodyConfirmationRegistration({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {    
     return Column(
       children: [
         const Text(
@@ -40,9 +42,9 @@ class ColumnBodyConfirmationRegistration extends StatelessWidget {
             textAlign: TextAlign.center,
           ),
         ),
-        const Text(
-          'maykondgranemann@gmail.com',
-          style: TextStyle(
+        Text(
+          ref.read(emailControllerProvider.state).state.text,
+          style: const TextStyle(
             color: Color.fromRGBO(172, 172, 173, 1),
             fontSize: 18,
             fontWeight: FontWeight.w900,
