@@ -23,7 +23,6 @@ class ColumnBodyCreateAccount extends HookConsumerWidget {
 
     void clearController() {
       nameController.state.clear();
-      emailController.state.clear();
       passwordController.state.clear();
       confirmPasswordController.state.clear();
     }
@@ -80,24 +79,28 @@ class ColumnBodyCreateAccount extends HookConsumerWidget {
           title: 'Name',
           icon: Icons.person_outline,
           controller: nameController.state,
+          isObscured: false,
         ),
         const SizedBox(height: 16),
         TextFormFieldCreate(
           title: 'Email',
           icon: Icons.email_outlined,
           controller: emailController.state,
+          isObscured: false,
         ),
         const SizedBox(height: 16),
         TextFormFieldCreate(
           title: 'Password',
           icon: Icons.lock_outline_sharp,
           controller: passwordController.state,
+          isObscured: true,
         ),
         const SizedBox(height: 16),
         TextFormFieldCreate(
           title: 'Confirm Password',
           icon: Icons.lock_outline_sharp,
           controller: confirmPasswordController.state,
+          isObscured: true,
         ),
         SizedBox(height: MediaQuery.of(context).size.height * 0.03),
         ButtonSign(

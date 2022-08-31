@@ -9,7 +9,9 @@ class ColumnBodyConfirmationRegistration extends HookConsumerWidget {
   const ColumnBodyConfirmationRegistration({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {    
+  Widget build(BuildContext context, WidgetRef ref) {
+    final emailController = ref.read(emailControllerProvider.state).state;
+
     return Column(
       children: [
         const Text(
@@ -43,7 +45,7 @@ class ColumnBodyConfirmationRegistration extends HookConsumerWidget {
           ),
         ),
         Text(
-          ref.read(emailControllerProvider.state).state.text,
+          emailController.text,
           style: const TextStyle(
             color: Color.fromRGBO(172, 172, 173, 1),
             fontSize: 18,
@@ -55,6 +57,8 @@ class ColumnBodyConfirmationRegistration extends HookConsumerWidget {
           title: 'SIGN IN',
           sizeFont: 20,
           isPressed: () {
+            emailController.clear();
+
             Navigator.of(context).push(
               MaterialPageRoute(
                 builder: (context) => const SignInPage(),

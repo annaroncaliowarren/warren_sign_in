@@ -4,18 +4,21 @@ class TextFormFieldSignIn extends StatelessWidget {
   final String title;
   final IconData icon;
   final TextEditingController controller;
+  final bool isObscured;
 
   const TextFormFieldSignIn({
     Key? key,
     required this.title,
     required this.icon,
     required this.controller,
+    required this.isObscured,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
       controller: controller,
+      obscureText: isObscured ? true : false,
       decoration: InputDecoration(
         prefixIcon: Icon(
           icon,

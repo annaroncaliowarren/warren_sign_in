@@ -40,12 +40,14 @@ class ColumnBodySignIn extends HookConsumerWidget {
           controller: emailController.state,
           title: 'Email',
           icon: Icons.email_outlined,
+          isObscured: false,
         ),
         const SizedBox(height: 18),
         TextFormFieldSignIn(
           controller: passwordController.state,
           title: 'Password',
           icon: Icons.lock_outline_sharp,
+          isObscured: true,
         ),
         TextButton(
           onPressed: () {},
